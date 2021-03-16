@@ -16,11 +16,26 @@ ou
 
 Instalar o tipos para styled-components
 # yarn add @types/styled-components --save-dev
-or
+ou
 # npm i --save-dev @types/styled-components
+
+Instalar o componente para Toggle
+# yarn add react-switch
+ou
+# npm install react-switch
+
+Instalar o componete de icones
+# yarn add react-icons
+or
+# npm install react-icons --save
+
 
 Incluir font Roboto
 https://fonts.google.com/?preview.text_type=custom
 
 Emotions
 https://www.w3schools.com/charsets/ref_emoji_smileys.asp
+
+Icons
+https://www.npmjs.com/package/react-icons
+https://react-icons.github.io/react-icons
