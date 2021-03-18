@@ -5,11 +5,16 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 To learn React, check out the [React documentation](https://reactjs.org/).
 
 extensoes para o VSCode 
+# vscode-styled-components
 
-vscode-styled-components
+Instalando react-router-dom
+# yarn add react-router-dom --save
+# yarn add @types/react-router-dom -D
+ou
+# npm install react-router-dom --save
+# npm i --save-dev @types/react-router-dom
 
 Instalando o styled-components
-
 # yarn add styled-components --save
 ou
 # npm install styled-components --save
