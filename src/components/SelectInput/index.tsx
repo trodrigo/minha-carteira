@@ -6,7 +6,8 @@ interface ISelectInputPropos {
     options: {
         value: string | number;
         label: string | number;
-    }[],
+        selected: boolean;
+    }[],    
 }
 
 const SelectInput: React.FC<ISelectInputPropos> = ({ options }) => {
@@ -15,7 +16,7 @@ const SelectInput: React.FC<ISelectInputPropos> = ({ options }) => {
             <select>
                 {
                     options.map(option => (
-                        <option value={option.value}>{option.label}</option>
+                        <option value={option.value} selected={option.selected}>{option.label}</option>
                     ))
                 }
                 {/*<option key='a'>Maria</option>
