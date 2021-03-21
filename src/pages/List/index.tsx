@@ -7,19 +7,14 @@ import HistoryFinanceCard from '../../components/HistoryFinanceCard';
 import gains from '../../repositories/gains';
 import expenses from '../../repositories/expenses';
 
-import monName from '../../utils/dateUtils';
+import formatCurrency from '../../utils/formatCurrency';
+import formatDate from '../../utils/formatDate';
 
 import { 
     Container, 
     Content,
     Filters
  } from './styles';
-
-const date = new Date();
-const year = date.getFullYear();
-const mounth = date.getUTCMonth();
-
-console.log(date);
 
 interface IRouteParams {
     match: {
@@ -40,6 +35,8 @@ interface IData {
 
 const List: React.FC<IRouteParams> = ({ match }) => {
     const [data, setData] = useState<IData[]>([]);
+    const [mounthSelected, setMounthSelected] = useState<string>(String(new Date().getMonth() + 1));
+    const [yearSelected, setYearthSelected] = useState<string>(String(new Date().getFullYear()));
 
     const { type } = match.params;
 
@@ -57,43 +54,58 @@ const List: React.FC<IRouteParams> = ({ match }) => {
         return type === 'entry-balance' ? gains : expenses
     },[type]); 
 
-    useEffect(() => {
-        const response = listData.map(item => {
+    useEffect(() => {        
+        const filteredData = listData.filter(item => {
+            const date = new Date(item.date);
+            const mounth = String(date.getMonth() + 1);
+            const year = String(date.getFullYear());
+
+            return mounth === mounthSelected && year === yearSelected;
+        });
+
+        const formattedData = filteredData.map(item => {
             return {
-                id: String(Math.random() * data.length),
+                //id: String(Math.random() * data.length),
+                id: String(new Date().getTime()) + item.amount,
                 description: item.description,
-                amountFormatted: item.amount,
+                amountFormatted: formatCurrency(Number(item.amount)),
                 frequency: item.frequency,
-                dataFormatted: item.date,                
+                dataFormatted: formatDate(item.date), 
                 tagColor: item.frequency === 'recorrente' ? '#E44C4e' : '#4E41F0' , 
             }
-        })
-
-        setData(response) ;    
-    },[]);    
+        });
+;
+        setData(formattedData) ;    
+    },[listData, mounthSelected, yearSelected, data.length]);    
 
     const mounths = [
-        { value: 1, label: 'Janeiro', selected: (mounth === 0?true:false) },
-        { value: 2, label: 'Fevereiro', selected: (mounth === 1?true:false) },
-        { value: 3, label: 'Março', selected: (mounth === 2?true:false) },
-        { value: 4, label: 'Abril', selected: (mounth === 3?true:false) },
-        { value: 5, label: 'Maio', selected: (mounth === 4?true:false) },
-        { value: 6, label: 'Junho', selected: (mounth === 5?true:false) },
+        { value: 1, label: 'Janeiro' },
+        { value: 2, label: 'Fevereiro' },
+        { value: 3, label: 'Março' },
+        { value: 4, label: 'Abril' },
+        { value: 5, label: 'Maio' },
+        { value: 6, label: 'Junho' },
+        { value: 1, label: 'Julho' },
+        { value: 2, label: 'Agosto' },
+        { value: 3, label: 'Setembro' },
+        { value: 4, label: 'Outubro' },
+        { value: 5, label: 'Novembro' },
+        { value: 6, label: 'Dezembro' },        
     ];
     
     //($TipoBeneficiario == 'Selecione')?'selected':''?
     const years = [
-        { value: 2022, label: 2022, selected:(year === 2022?true:false)},
-        { value: 2021, label: 2021, selected:(year === 2021?true:false)},
-        { value: 2020, label: 2020, selected:(year === 2020?true:false)},
-        { value: 2019, label: 2019, selected:(year === 2019?true:false)},    
+        { value: 2022, label: 2022 },
+        { value: 2021, label: 2021 },
+        { value: 2020, label: 2020 },
+        { value: 2019, label: 2019 },
     ];
 
     return (
         <Container>
             <ContentHeader title={title} lineColor={lineColor}>
-                <SelectInput options={mounths} />
-                <SelectInput options={years}/>
+                <SelectInput options={mounths} onChange={(e) => setMounthSelected(e.target.value)} defaultValue={mounthSelected}/>
+                <SelectInput options={years} onChange={(e) => setYearthSelected(e.target.value)} defaultValue={yearSelected}/>
             </ContentHeader>
 
             <Filters>

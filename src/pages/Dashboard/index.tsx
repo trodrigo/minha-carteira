@@ -5,14 +5,14 @@ import { Container } from './styles';
 
 const Dashboard: React.FC = () => {
     const options = [
-        { value: 'Rodrigo', label: 'Rodrigo', selected: true },
-        { value: 'Maria', label: 'Maria', selected: false },
+        { value: 'Rodrigo', label: 'Rodrigo' },
+        { value: 'Maria', label: 'Maria' },
     ];
 
     return (
         <Container>
             <ContentHeader title="Dashboard" lineColor="#F7931B">
-                <SelectInput options={options} />
+                <SelectInput options={options} onChange={() => {}}/>
             </ContentHeader>
         </Container>
     );

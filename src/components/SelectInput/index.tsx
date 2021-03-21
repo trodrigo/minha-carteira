@@ -6,20 +6,21 @@ interface ISelectInputPropos {
     options: {
         value: string | number;
         label: string | number;
-        selected: boolean;
-    }[],    
+    }[],  
+    onChange(event: React.ChangeEvent<HTMLSelectElement>): void | undefined; 
+    defaultValue?: string | number;
 }
 
-const SelectInput: React.FC<ISelectInputPropos> = ({ options }) => {
+const SelectInput: React.FC<ISelectInputPropos> = ({ options, onChange, defaultValue }) => {
     return (
         <Container>
-            <select>
+            <select onChange={onChange} defaultValue={defaultValue}>
                 {
                     options.map(option => (
                         <option 
-                        key={option.value}
-                        value={option.value} 
-                        selected={option.selected}>{option.label}</option>
+                            key={option.value}
+                            value={option.value}
+                        >{option.label}</option>
                     ))
                 }
                 {/*<option key='a'>Maria</option>
