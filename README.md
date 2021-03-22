@@ -31,9 +31,13 @@ ou
 
 Instalar o componete de icones
 # yarn add react-icons
-or
+ou
 # npm install react-icons --save
 
+Instalar criador de Id
+# yarn add install uuidv4 --save
+ou
+# npm install uuidv4 --save
 
 Incluir font Roboto
 https://fonts.google.com/?preview.text_type=custom
