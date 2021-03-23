@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { uuid } from 'uuidv4';
 
 import ContentHeader from '../../components/ContentHeader';
@@ -77,7 +77,7 @@ const List: React.FC<IRouteParams> = ({ match }) => {
 
         if(alreadySelected >= 0) {
             //console.log('Já selecionada');
-            const filtered = frequencyFilterSelected.filter(item => item != frequency);
+            const filtered = frequencyFilterSelected.filter(item => item !== frequency);
             setFrequencyFilterSelected(filtered);
         }
         else {
@@ -105,13 +105,15 @@ const List: React.FC<IRouteParams> = ({ match }) => {
     }
 
     useEffect(() => {        
-        const filteredData = pageData.data.filter(item => {
+        const { data } = pageData;
+
+        const filteredData = data.filter(item => {
             const date = new Date(item.date);
             const mounth = date.getMonth() + 1;
             const year = date.getFullYear();
 
-            console.log('mes: ' + mounth + '  selecionadao: ' + mounthSelected);
-            console.log('mes: ' + year + '  selecionadao: ' + yearSelected);
+            //console.log('mes: ' + mounth + '  selecionadao: ' + mounthSelected);
+            //console.log('mes: ' + year + '  selecionadao: ' + yearSelected);
             return mounth === mounthSelected && year === yearSelected && frequencyFilterSelected.includes(item.frequency);
         });
 
@@ -126,9 +128,9 @@ const List: React.FC<IRouteParams> = ({ match }) => {
                 tagColor: item.frequency === 'recorrente' ? '#4E41F0' : '#E44C4e' , 
             }
         });
-        console.log(pageData.data);
+        console.log(data);
         setData(formattedData) ;    
-    },[pageData.data, mounthSelected, yearSelected, frequencyFilterSelected]);    
+    },[pageData, mounthSelected, yearSelected, frequencyFilterSelected]);    
 
     //const mounths = [
     //    { value: 1, label: 'Janeiro' },
@@ -153,8 +155,9 @@ const List: React.FC<IRouteParams> = ({ match }) => {
     //];
     const years = useMemo(() => {
         let uniqueYears: number[] =[];
+        const { data } = pageData;
 
-        pageData.data.forEach(item => {
+        data.forEach(item => {
             const date = new Date(item.date);
             const year = date.getFullYear();
 
@@ -173,7 +176,7 @@ const List: React.FC<IRouteParams> = ({ match }) => {
                 label: year,
             }
         })
-    }, [pageData.data]);
+    }, [pageData]);
 
     const mounths = useMemo(() => {
         return listOfMounths.map((mounth, index) => {
@@ -201,8 +204,11 @@ const List: React.FC<IRouteParams> = ({ match }) => {
             <Filters>
                 <button 
                     type="button" 
-                    className={`tag-filter tag-filter-recurrent
-                        ${frequencyFilterSelected.includes('recorrente') && 'tag-actived'}`}
+                    className={`
+                        tag-filter 
+                        tag-filter-recurrent
+                        ${frequencyFilterSelected.includes('recorrente') && 'tag-actived'}
+                    `}
                     onClick={() => handleFrequencyClick('recorrente')}
                 >
                     Recorrentes
@@ -210,8 +216,11 @@ const List: React.FC<IRouteParams> = ({ match }) => {
 
                 <button 
                     type="button"
-                    className={`tag-filter tag-filter-eventualy
-                    ${frequencyFilterSelected.includes('eventual') && 'tag-actived'}`}
+                    className={`
+                        tag-filter
+                        tag-filter-eventualy
+                        ${frequencyFilterSelected.includes('eventual') && 'tag-actived'}
+                    `}
                     onClick={() => handleFrequencyClick('eventual')}
                 >
                     Eventuais
