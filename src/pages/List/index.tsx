@@ -40,21 +40,37 @@ const List: React.FC<IRouteParams> = ({ match }) => {
     const [yearSelected, setYearSelected] = useState<number>(new Date().getFullYear());
     const [frequencyFilterSelected, setFrequencyFilterSelected] = useState(['recorrente','eventual']);
 
-    const { type } = match.params;
+    //const { type } = match.params;
+    const movimentType = match.params.type;
 
-    const title = useMemo(() => {
-        return type === 'entry-balance' ? 'Entradas' : 'Saídas'
-     },[type]);
-
-
-     const lineColor = useMemo(() => {
-        return type === 'entry-balance' ? '#F7931b' : '#E44C4E'
-     },[type]);
+    // const title = useMemo(() => {
+    //     return movimentType === 'entry-balance' ? 'Entradas' : 'Saídas'
+    //  },[movimentType]);
 
 
-    const listData = useMemo(() => {
-        return type === 'entry-balance' ? gains : expenses
-    },[type]); 
+    //  const lineColor = useMemo(() => {
+    //     return movimentType === 'entry-balance' ? '#F7931b' : '#E44C4E'
+    //  },[movimentType]);
+
+
+    // const listData = useMemo(() => {
+    //     return movimentType === 'entry-balance' ? gains : expenses
+    // },[movimentType]); 
+
+    const pageData = useMemo(() =>{
+        return movimentType === 'entry-balance' ?
+        {
+            title: 'Entradas',
+            lineColor: '#F7931b',
+            data: gains
+        }
+        :
+        {
+            title: 'Saídas',
+            lineColor: '#E44C4E',
+            data: expenses
+        }
+    }, [movimentType]);
 
     const handleFrequencyClick = ((frequency: string) => {
         const alreadySelected = frequencyFilterSelected.findIndex(item => item === frequency);
@@ -89,7 +105,7 @@ const List: React.FC<IRouteParams> = ({ match }) => {
     }
 
     useEffect(() => {        
-        const filteredData = listData.filter(item => {
+        const filteredData = pageData.data.filter(item => {
             const date = new Date(item.date);
             const mounth = date.getMonth() + 1;
             const year = date.getFullYear();
@@ -110,9 +126,9 @@ const List: React.FC<IRouteParams> = ({ match }) => {
                 tagColor: item.frequency === 'recorrente' ? '#4E41F0' : '#E44C4e' , 
             }
         });
-        console.log(data);
+        console.log(pageData.data);
         setData(formattedData) ;    
-    },[listData, mounthSelected, yearSelected, frequencyFilterSelected]);    
+    },[pageData.data, mounthSelected, yearSelected, frequencyFilterSelected]);    
 
     //const mounths = [
     //    { value: 1, label: 'Janeiro' },
@@ -138,7 +154,7 @@ const List: React.FC<IRouteParams> = ({ match }) => {
     const years = useMemo(() => {
         let uniqueYears: number[] =[];
 
-        listData.forEach(item => {
+        pageData.data.forEach(item => {
             const date = new Date(item.date);
             const year = date.getFullYear();
 
@@ -157,7 +173,7 @@ const List: React.FC<IRouteParams> = ({ match }) => {
                 label: year,
             }
         })
-    }, [listData]);
+    }, [pageData.data]);
 
     const mounths = useMemo(() => {
         return listOfMounths.map((mounth, index) => {
@@ -171,7 +187,7 @@ const List: React.FC<IRouteParams> = ({ match }) => {
 
     return (
         <Container>
-            <ContentHeader title={title} lineColor={lineColor}>
+            <ContentHeader title={pageData.title} lineColor={pageData.lineColor}>
                 <SelectInput 
                     options={mounths} 
                     onChange={(e) => handleMonthSelected(e.target.value)} 
