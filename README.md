@@ -54,3 +54,6 @@ Icons
 https://www.npmjs.com/package/react-icons
 https://react-icons.github.io/react-icons
 
+Bibliotecas de imagens
+https://www.flaticon.com/
+
