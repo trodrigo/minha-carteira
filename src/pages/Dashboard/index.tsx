@@ -2,14 +2,19 @@ import React, { useMemo, useState } from 'react';
 import ContentHeader from '../../components/ContentHeader';
 import SelectInput from '../../components/SelectInput';
 import WalletBox from '../../components/WalletBox';
+
 import { 
     Container, 
     Content 
 } from './styles';
 
+import happyImg from '../../assets/happy.svg';
+import sadImg from '../../assets/sad.svg';
+
 import gains from '../../repositories/gains';
 import expenses from '../../repositories/expenses';
 import listOfMounths from '../../utils/listOfMounths';
+import MessageBox from '../../components/MessageBox';
 
 const Dashboard: React.FC = () => {
     const [mounthSelected, setMounthSelected] = useState<number>(new Date().getMonth() + 1);
@@ -106,7 +111,14 @@ const Dashboard: React.FC = () => {
                     footerLabels="Atualizado com base nas entradas e saídas"
                     icon="arrowDown"
                     color="#E44C4E"
-                />                                
+                />        
+
+                -<MessageBox 
+                    title="Muito bem!"
+                    description="Sua carteira esta positiva"
+                    footerText="Continue assim. Considere investir o seu saldo"
+                    icon={happyImg}
+                />                        
             </Content>            
         </Container>
     );
