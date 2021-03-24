@@ -39,6 +39,11 @@ Instalar criador de Id
 ou
 # npm install uuidv4 --save
 
+Instalr o CountUp
+# yarn add react-countup --save
+ou
+# npm install react-countup --save
+
 Incluir font Roboto
 https://fonts.google.com/?preview.text_type=custom
 
@@ -48,3 +53,4 @@ https://www.w3schools.com/charsets/ref_emoji_smileys.asp
 Icons
 https://www.npmjs.com/package/react-icons
 https://react-icons.github.io/react-icons
+
