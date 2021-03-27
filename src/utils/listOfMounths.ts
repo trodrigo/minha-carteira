@@ -5,6 +5,7 @@ export default [
     "Abril",
     "Maio",
     "Junho",
+    "Julho",
     "Agosto",
     "Outubro",
     "Novembro",
