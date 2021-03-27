@@ -1,7 +1,5 @@
 import React from 'react';
 
-import happyImg from '../../assets/happy.svg';
-
 import { Container } from './styles';
 
 interface IMessageBoxProps {

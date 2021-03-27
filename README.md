@@ -44,6 +44,11 @@ Instalr o CountUp
 ou
 # npm install react-countup --save
 
+Instalar o ReCharts
+# yarn add recharts @types/recharts --save
+ou
+# npm install recharts @types/recharts --save
+
 Incluir font Roboto
 https://fonts.google.com/?preview.text_type=custom
 

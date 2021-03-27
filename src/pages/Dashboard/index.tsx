@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import ContentHeader from '../../components/ContentHeader';
 import SelectInput from '../../components/SelectInput';
 import WalletBox from '../../components/WalletBox';
+import PieChart from '../../components/PieChart';
 
 import { 
     Container, 
@@ -10,7 +11,7 @@ import {
 
 import happyImg from '../../assets/happy.svg';
 import sadImg from '../../assets/sad.svg';
-import winkImg from '../../assets/wink.svg';
+import cryingImg from '../../assets/crying.svg';
 
 import gains from '../../repositories/gains';
 import expenses from '../../repositories/expenses';
@@ -97,7 +98,7 @@ const Dashboard: React.FC = () => {
 
     const totalBalance = useMemo(() => {
         return totalGains - totalExpenses;
-    }, [yearSelected, mounthSelected]);
+    }, [totalGains, totalExpenses, yearSelected, mounthSelected]);
 
     const message = useMemo(() => {
         if (totalBalance < 0) {
@@ -112,7 +113,7 @@ const Dashboard: React.FC = () => {
                 title: "Ufaa!",
                 description: "Neste mês você gastou examente o que ganhou",
                 footerText: "Ainda é necessário cortar as despesas desnecessárias",
-                icon: winkImg,
+                icon: cryingImg,
             }            
         } else {
             return {
@@ -141,11 +142,6 @@ const Dashboard: React.FC = () => {
             throw new Error('Invalid year value. Is accept integer.');
         }
     }
-
-    const options = [
-        { value: 'Rodrigo', label: 'Rodrigo' },
-        { value: 'Maria', label: 'Maria' },
-    ];
 
     return (
         <Container>
@@ -183,12 +179,14 @@ const Dashboard: React.FC = () => {
                     color="#E44C4E"
                 />        
 
-                -<MessageBox 
+                <MessageBox 
                     title={message.title}
                     description={message.description}
                     footerText={message.footerText}
                     icon={message.icon}
-                />                        
+                />
+
+                <PieChart />
             </Content>            
         </Container>
     );
